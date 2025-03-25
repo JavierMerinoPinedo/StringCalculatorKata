@@ -10,6 +10,14 @@ class StringCalculator
             return 0;
         }
 
+        if(str_contains($numbers, '//')) {
+            $delimiter = $numbers[2];
+            $numbers = str_replace('//'. $delimiter . '\n', '', $numbers);
+            $numbers = str_replace($delimiter, ',', $numbers);
+
+            return array_sum(explode(',', $numbers));
+        }
+
         $numbers = str_replace('\n', ',', $numbers);
 
         if (str_contains($numbers, ',')) {
