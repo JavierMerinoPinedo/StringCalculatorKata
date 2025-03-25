@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Deg540\DockerPHPBoilerplate\Test;
 
 use Deg540\DockerPHPBoilerplate\StringCalculator;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 final class StringCalculatorTest extends TestCase
@@ -19,6 +20,7 @@ final class StringCalculatorTest extends TestCase
 
     /**
      * @test
+     * @throws Exception
      */
     public function givenSingleNumberReturnsSameNumber(): void
     {
@@ -27,6 +29,7 @@ final class StringCalculatorTest extends TestCase
 
     /**
      * @test
+     * @throws Exception
      */
     public function givenNumbersReturnsAddNumbers(): void
     {
@@ -35,6 +38,7 @@ final class StringCalculatorTest extends TestCase
 
     /**
      * @test
+     * @throws Exception
      */
     public function givenNumbersSeparatedByCommasAndLineBreakReturnsSumOfNumbers(): void
     {
@@ -43,18 +47,20 @@ final class StringCalculatorTest extends TestCase
 
     /**
      * @test
+     * @throws Exception
      */
-    public function givenNumbersSeparatedBySemicolonReturnSumOfNumbers(): void
+    public function givenNumbersSeparatedByCustomDelimiterReturnSumOfNumbers(): void
     {
-        $this->assertEquals(3, $this->stringCalculator->add('//;\n1;2'));
+        $this->assertEquals(3, $this->stringCalculator->add('//&\n1&2'));
     }
 
     /**
      * @test
      */
-    public function givenNumbersSeparatedByAmpersandReturnSumOfNumbers(): void
+    public function givenOneNegativeNumberThrowsException(): void
     {
-        $this->assertEquals(3, $this->stringCalculator->add('//&\n1&2'));
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('negativos no soportados: -1');
+        $this->stringCalculator->add('-1');
     }
-
 }

@@ -2,6 +2,8 @@
 
 namespace Deg540\DockerPHPBoilerplate;
 
+use Exception;
+
 class StringCalculator
 {
     public function add(string $numbers): int
@@ -19,6 +21,10 @@ class StringCalculator
         }
 
         $numbers = str_replace('\n', ',', $numbers);
+
+        if (str_contains($numbers, '-')) {
+            throw new Exception('negativos no soportados: -1');
+        }
 
         if (str_contains($numbers, ',')) {
             $numbersArray = explode(',', $numbers);
