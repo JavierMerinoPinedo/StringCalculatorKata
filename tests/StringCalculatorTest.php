@@ -1,30 +1,44 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Deg540\DockerPHPBoilerplate\Test;
 
 use Deg540\DockerPHPBoilerplate\StringCalculator;
 use PHPUnit\Framework\TestCase;
 
-class StringCalculatorTest extends TestCase
+final class StringCalculatorTest extends TestCase
 {
-    private StringCalculator $calculadora;
+    private StringCalculator $stringCalculator;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->calculadora = new StringCalculator();
+        $this->stringCalculator = new StringCalculator();
     }
 
     /**
      * @test
      */
-    public function givenVoidStringReturns0(): void
+    public function givenSingleNumberReturnsSameNumber(): void
     {
-        // Act
-        $result = $this->calculadora->Add("");
-
-        // Assert
-        $this->assertEquals(0, $result);
+        $this->assertEquals(1, $this->stringCalculator->add('1'));
     }
+
+    /**
+     * @test
+     */
+    public function givenNumbersReturnsAddNumbers(): void
+    {
+        $this->assertEquals(6, $this->stringCalculator->add('1,2,3'));
+    }
+
+    /**
+     * @test
+     */
+    public function givenNumbersSeparatedByCommasAndLineBreakReturnsSumOfNumbers(): void
+    {
+        $this->assertEquals(6, $this->stringCalculator->add('1\n2,3'));
+    }
+
 }
